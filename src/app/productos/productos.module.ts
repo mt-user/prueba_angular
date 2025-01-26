@@ -1,21 +1,28 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SearchPruductsComponent } from './components/search-pruducts/search-pruducts.component';
+import { SearchProductsComponent } from './components/search-products/search-products.component';
 import { TableProductsComponent } from './components/table-products/table-products.component';
-
+import { ReactiveFormsModule } from '@angular/forms';
+import { AddProductsComponent } from './components/add-products/add-products.component';
+import { EditProductsComponent } from './components/edit-products/edit-products.component';
 
 
 @NgModule({
   declarations: [
-    SearchPruductsComponent,
-    TableProductsComponent
+    TableProductsComponent,
+    SearchProductsComponent,
+    AddProductsComponent,
+    EditProductsComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    ReactiveFormsModule
   ],
   exports:[
-    SearchPruductsComponent,
-    TableProductsComponent
+    TableProductsComponent,
+    SearchProductsComponent,
+    AddProductsComponent,
+    EditProductsComponent
   ]
 })
 export class ProductosModule { }

@@ -8,7 +8,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let product of products; let i = index">
+    <tr *ngFor="let product of products | async; let i = index">
       <td>
         {{ i + 1 }}
       </td>
@@ -16,11 +16,20 @@
         {{ product.name }}
       </td>
       <td>
-        {{ product.price }}
+        {{ product.price | currency: 'EUR' }}
       </td>
       <td>
-        {{ product.actions }}
+        <button class="btn btn-outline-primary btn-sm ms-2 " (click)="editProduct(product)">Editar</button>
+        <button class="btn btn-outline-secondary btn-sm ms-2" (click)="deleteProduct(product)">Eliminar</button>
       </td>
     </tr>
   </tbody>
 </table>
+
+
+<edit-products
+  [product]="selectedProduct"
+  [isOpen]="isModalOpen"
+  (save)="onSaveProduct($event)"
+  (cancel)="closeModal()">
+</edit-products>

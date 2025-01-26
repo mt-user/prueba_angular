@@ -1,0 +1,23 @@
+<div class="edit-products" tabindex="-1" *ngIf="isOpen">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <h2>Editar Producto</h2>
+      <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+        <div class="row p-3">
+          <div class="col-8">
+            <label for="name" class="form-label">Nombre:</label>
+            <input id="name" type="text" class="form-control" formControlName="name">
+          </div>
+          <div class="col-4">
+            <label for="price" class="form-label">Precio:</label>
+            <input id="price" type="number" class="form-control" formControlName="price">
+          </div>
+        </div>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-2">
+          <button type="submit" [disabled]="!productForm.valid" class="btn btn-primary">Guardar</button>
+          <button type="button" (click)="onCancel()" class="btn btn-secondary">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

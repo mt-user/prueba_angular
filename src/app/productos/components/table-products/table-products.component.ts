@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../../interfaces/products.interface';
+import { ProductsService } from '../../services/products.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'table-products',
@@ -10,19 +12,41 @@ import { Product } from '../../interfaces/products.interface';
 })
 
 export class TableProductsComponent implements OnInit {
-  public products?:Product[];
+  products: Observable<Product[]>;
+  selectedProduct: Product | null = null;
+  isModalOpen:boolean = false;
 
-  constructor(){}
 
-  ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    this.products = [
-      { name:"lapiz", price: 15, actions: "escribir"},
-      { name:"Boligrafo", price: 25, actions: "escribir"},
-      { name:"Goma de borrar", price: 10, actions: "borrar"},
-      { name:"sacapuntas", price: 45, actions: "afilar lapiz"},
-    ]
+  constructor(private productService: ProductsService){
+    this.products = this.productService.products$;
   }
 
+  ngOnInit(): void {
+    this.loadProducts();
+  }
+
+  loadProducts() {
+    this.productService.getProducts()
+  }
+
+  editProduct(product: Product) {
+    this.selectedProduct = product;
+    this.isModalOpen = true;
+  }
+
+  onSaveProduct(updatedProduct: Product) {
+    this.productService.updateProduct(updatedProduct);
+    this.closeModal();
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
+    this.selectedProduct = null;
+  }
+
+  deleteProduct(product: Product) {
+    if (confirm('¿Está seguro que desea eliminar este producto?')) {
+      this.productService.deleteProduct(product.id);
+    }
+  }
 }
